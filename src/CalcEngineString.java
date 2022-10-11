@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class CalcEngineString {
@@ -82,16 +83,25 @@ public class CalcEngineString {
        return value;
     }
     private static void performOperation(String[] parts){
-        System.out.println("Parts here 0 index "+parts[0]);
-        System.out.println("Parts here at 1 index "+parts[1]);
-        System.out.println("Parts here at 2 index "+parts[2]);
         char opCode= opCodeFromStrings(parts[0]);
-        System.out.println("opCode value "+opCode);
-        double leftVal= valueFromWord(parts[1]);
-        System.out.println("leftVal value "+leftVal);
-        double rightVal= valueFromWord(parts[2]);
-        System.out.println("rightVal value "+rightVal);
-        double result= execute(opCode,leftVal,rightVal);
-       System.out.println(result);
+        if(opCode=='w'){
+            handleWhen(parts);
+
+        }else{
+            double leftVal= valueFromWord(parts[1]);
+            System.out.println("leftVal value "+leftVal);
+            double rightVal= valueFromWord(parts[2]);
+            System.out.println("rightVal value "+rightVal);
+            double result= execute(opCode,leftVal,rightVal);
+            System.out.println(result);
+        }
+
+    }
+    private static void handleWhen(String[] parts){
+        LocalDate startDate=LocalDate.parse(parts[1]);
+        long daysToAdd= (long) valueFromWord(parts[2]);
+        LocalDate newDate=startDate.plusDays(daysToAdd);
+        String output=String.format("%s plus %d days is %s ", startDate,daysToAdd,newDate);
+        System.out.println(output);
     }
 }
